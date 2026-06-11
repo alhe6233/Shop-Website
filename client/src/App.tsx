@@ -6,18 +6,20 @@ import HomePage from '@/pages/HomePage'
 import ShopPage from '@/pages/ShopPage'
 import AboutPage from '@/pages/AboutPage'
 import CheckoutPage from './pages/CheckoutPage'
+import ProductDetailPage from './pages/ProductDetailPage'
 
 export default function App() {
   return (
-    <div className="flex min-h-dvh flex-col"> 
+    <div className="flex min-h-dvh flex-col">
       <Navbar />
-      <CartDrawer /> 
-      <main className="flex-1"> 
-        <Routes> 
+      <CartDrawer />
+      <main className="flex-1">
+        <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/shop" element={<ShopPage />} />
+          <Route path="/shop/:id" element={<ProductDetailPage />} />
           <Route path="/about" element={<AboutPage />} />
-           <Route path="/checkout" element={<CheckoutPage />} />
+          <Route path="/checkout" element={<CheckoutPage />} />
         </Routes>
       </main>
       <Footer />

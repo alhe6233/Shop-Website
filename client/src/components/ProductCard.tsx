@@ -1,13 +1,18 @@
 import { ShoppingBag, Star } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
 import type { Product } from '@/lib/types'
 import { useCart } from '@/context/cart-context'
 import { Button } from '@/components/ui/button'
 
 export default function ProductCard({ product }: { product: Product }) {
   const { addItem } = useCart()
+  const navigate = useNavigate()
 
   return (
-    <div className="group flex flex-col overflow-hidden rounded-2xl border border-border/60 bg-card transition-shadow hover:shadow-lg hover:shadow-primary/5">
+    <div
+      onClick={() => navigate(`/shop/${product.id}`)}
+      className="group flex flex-col overflow-hidden rounded-2xl border border-border/60 bg-card transition-shadow hover:shadow-lg hover:shadow-primary/5 cursor-pointer"
+    >
       <div className="relative aspect-square overflow-hidden bg-secondary/50">
         <img
           src={product.image || '/placeholder.svg'}
@@ -34,7 +39,14 @@ export default function ProductCard({ product }: { product: Product }) {
         <p className="mt-1 text-sm text-muted-foreground">{product.tagline}</p>
         <div className="mt-4 flex items-center justify-between">
           <span className="font-serif text-lg font-semibold">${product.price.toFixed(2)}</span>
-          <Button size="sm" onClick={() => addItem(product)} aria-label={`Add ${product.name} to bag`}>
+          <Button
+            size="sm"
+            onClick={(e) => {
+              e.stopPropagation() // nicht zur Detailseite navigieren
+              addItem(product)
+            }}
+            aria-label={`Add ${product.name} to bag`}
+          >
             <ShoppingBag className="size-4" />
             Add
           </Button>
